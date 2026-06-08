@@ -4,6 +4,10 @@ import { rentals } from "../data/rentalData";
 export function getReturnedRentals() {
     return rentals.filter(rental => rental.isReturned === true)
 }
+
+export function getUnReturnedRentals() {
+    return rentals.filter(rental => rental.isReturned === false)
+}
 // console.log(getReturnedRentals())
 
 // take a single rental and return a new object with a cost property added. Cost is daysRented * dailyRate.
@@ -47,9 +51,11 @@ export function getGenreRentals(rentals, genre) {
 //and the full list of returned rentals with their costs
 export function getRentalReport() {
     const returnedRentals = getReturnedRentals();
+    const unReturned = getUnReturnedRentals();
     const totalRevenue = getTotalRevenue(returnedRentals);
     const returnedRentalsCount = returnedRentals.length;
     const returnedRentalsCostAdded = returnedRentals.map(rental => calculateRentalCost(rental));
+    const unReturnedCostAdded = unReturned.map(unRental => calculateRentalCost(unRental))
     const mostExpensive = returnedRentalsCostAdded.reduce((most, rental) => {
         return rental.cost > most.cost ? rental : most;
     });
@@ -58,7 +64,9 @@ export function getRentalReport() {
         totalRevenue: totalRevenue,
         totalReturnedCount: returnedRentalsCount,
         mostExpensiveRental: mostExpensive,
-        fullList: returnedRentalsCostAdded
+        fullList: returnedRentalsCostAdded,
+        unReturnedCostAdded: unReturnedCostAdded
+
     }
 }
 // console.log(getRentalReport())

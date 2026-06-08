@@ -6,6 +6,7 @@ export default function RentalDashboard() {
   const mostExpMovie = getRentalReport().mostExpensiveRental.movie;
   const expMovieCustomer = getRentalReport().mostExpensiveRental.customer;
   const returnedRentals = getRentalReport().fullList;
+  const unReturned = getRentalReport().unReturnedCostAdded;
   ////////stretttch
   const sciRentals = getGenreReport("Sci-Fi").genreList.length;
   const sciRevenue = getGenreReport("Sci-Fi").totalRevenue;
@@ -15,6 +16,7 @@ export default function RentalDashboard() {
 
   return (
     <div className="container mt-4">
+      <h1 className="mb-4">Movie Rental Dashboard</h1>
       {/* Stat Cards */}
       <div className="row g-3 mb-4">
         <div className="col-md-4 ">
@@ -79,6 +81,39 @@ export default function RentalDashboard() {
           </table>
         </div>
       </div>
+
+      <div className="card shadow-sm">
+        <div className="card-header">
+          <h5 className="mb-0">UnReturned Rentals</h5>
+        </div>
+        <div className="card-body p-0">
+          <table className="table table-striped table-hover mb-0">
+            <thead className="table-dark">
+              <tr>
+                <th>Customer</th>
+                <th>Movie</th>
+                <th>Genre</th>
+                <th>Days Rented</th>
+                <th>Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              {unReturned.map((rental) => {
+                return (
+                  <tr key={rental.id}>
+                    <td>{rental.customer}</td>
+                    <td>{rental.movie}</td>
+                    <td>{rental.genre}</td>
+                    <td>{rental.daysRented}</td>
+                    <td>${rental.cost}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       {/*Stretch Goal */}
       <div className="row g-3 mb-4 mt-4">
         <div className="col-md-6">
